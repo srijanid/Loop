@@ -1,9 +1,9 @@
 import React from 'react'
 
-function page() {
+function WorkspaceDocument() {
   return (
-    <div>page</div>
+    <div>WorkspaceDocument</div>
   )
 }
 
-export default page
+export default WorkspaceDocument

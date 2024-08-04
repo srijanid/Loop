@@ -39,7 +39,7 @@ function WorkspaceList() {
                 <h2>Create a new workspace</h2>
     
                 <Link href={'/createworkspace'}>
-                    <Button variant="outline-1" className="my-3 outline">+ New Workspace</Button>
+                    <Button  className="my-3 outline">+ New Workspace</Button>
                 </Link>
             </div>
             :

@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation'
 import { db} from '@/config/firebaseConfig'
 import { doc,setDoc } from 'firebase/firestore'
 import { Button } from '@/components/ui/button'
+import uuid4 from 'uuid4'
 
 function CreateWorkspace() {
     const [coverImage,setCoverImage]=useState('/cover.png');
@@ -27,18 +28,34 @@ function CreateWorkspace() {
      */
     const OnCreateWorkspace=async()=>{
         setLoading(true);
-        const docId=Date.now();
-        const result=await setDoc(doc(db,'Workspace',docId.toString()),{
+        const workspaceId=Date.now();
+        const result=await setDoc(doc(db,'Workspace',workspaceId.toString()),{
             workspaceName:workspaceName,
             emoji:emoji,
             coverImage:coverImage,
             createdBy:user?.primaryEmailAddress?.emailAddress,
-            id:docId,
+            id:workspaceId,
             orgId:orgId?orgId:user?.primaryEmailAddress?.emailAddress
         });
 
+        const docId=uuid4();
+        await setDoc(doc(db,'workspaceDocuments',docId.toString()),{
+            workspaceId:workspaceId,
+            createdBy:user?.primaryEmailAddress?.emailAddress,
+            coverImage:null,
+            emoji:null,
+            id:docId,
+            documentName:'Untitled Document',
+            documentOutput:[]
+        })
+
+        await setDoc(doc(db,'documentOutput',docId.toString()),{
+            docId:docId,
+            output:[]
+        })
+
         setLoading(false);
-        router.replace('/workspace/'+docId);
+        router.replace('/workspace/'+workspaceId+"/"+docId);
         
     }
     return (
