@@ -1,3 +1,4 @@
+'use client'
 import Logo from '@/app/_components/Logo'
 import { Button } from '@/components/ui/button'
 import { db } from '@/config/firebaseConfig';
@@ -10,6 +11,7 @@ import { toast } from 'sonner';
 import { Progress } from '@/components/ui/progress';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
+import NotificationBox from './NotificationBox';
 
 const MAX_FILE=process.env.NEXT_PUBLIC_MAX_FILE_COUNT;
 
@@ -84,7 +86,9 @@ function SideNav({params}) {
      hidden md:block fixed bg-blue-50 p-5 shadow-md'>
         <div className="flex justify-between items-center">
             <Logo/>
+            {/* <NotificationBox> */}
             <Bell className='h-5 w-5 text-gray-500'/>
+            {/* </NotificationBox> */}
         </div>
         <hr className='my-5'></hr>
         <div>
@@ -105,7 +109,7 @@ function SideNav({params}) {
          <div className='absolute bottom-10 w-[85%]'>
         <Progress value={(documentList?.length/MAX_FILE)*100} />
         <h2 className='text-sm font-light my-2'><strong>{documentList?.length}</strong> Out of <strong>5</strong> files used</h2>
-        <h2 className='text-sm font-light '>Upgrade your plan for unlimted access</h2>
+        <h2 className='text-sm font-light '>Upgrade your plan for unlimited access</h2>
        
         </div>
     </div>
